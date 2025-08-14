@@ -17,24 +17,30 @@
   --shadow: 0 4px 14px rgba(0,0,0,0.25);
 }
 
+/* Body */
 body {
   background: var(--bg);
   color: var(--text);
   font-family: 'Inter', sans-serif;
-  line-height: 1.9;
-  padding: 2rem;
+  line-height: 2;
+  padding: 0;
+  margin: 0;
   font-size: 19px;
-  overflow-x: hidden;
 }
 
+/* Container */
+.container {
+  max-width: 100%;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+}
+
+/* Header */
 header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 2rem;
-  opacity: 0;
-  transform: translateY(-20px);
-  animation: fadeSlideDown 0.8s forwards;
 }
 header .brand {
   font-size: 2rem;
@@ -55,7 +61,6 @@ header .name {
   font-weight: 500;
   margin-bottom: 0.5rem;
 }
-
 header button {
   padding: 0.8rem 1.5rem;
   border-radius: var(--radius);
@@ -64,21 +69,17 @@ header button {
   font-weight: bold;
   border: none;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
 }
 header button:hover {
   background: #6dd9c0;
-  transform: translateY(-2px);
 }
 
+/* Controls */
 .controls {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1.5rem;
-  opacity: 0;
-  transform: translateY(-15px);
-  animation: fadeSlideDown 0.8s forwards 0.3s;
 }
 .controls input,
 .controls select {
@@ -90,46 +91,34 @@ header button:hover {
   border: 1px solid var(--card-border);
   background: var(--card-bg);
   color: var(--text);
-  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 .controls input:focus,
 .controls select:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 10px rgba(88,193,170,0.5);
-}
-.controls .count {
-  align-self: center;
-  color: var(--muted);
-  font-weight: 500;
+  outline: none;
 }
 
+/* Grid */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px,1fr));
-  gap: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
+/* Card */
 .card {
   background: var(--card-bg);
   padding: 1.8rem;
   border-radius: var(--radius);
   border: 1px solid var(--card-border);
   box-shadow: var(--shadow);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.3s ease;
-}
-.card.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* Question & Answer */
 .question {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 0.6rem;
   color: var(--accent2);
@@ -138,10 +127,9 @@ header button:hover {
   font-size: 1.05rem;
   white-space: pre-wrap;
   color: var(--text);
-  opacity: 0.95;
-  line-height: 1.95;
 }
 
+/* Footer */
 footer {
   margin-top: 3rem;
   text-align: center;
@@ -149,26 +137,17 @@ footer {
   color: var(--muted);
   font-weight: 500;
   border-top: 1px solid #333842;
-  padding-top: 1rem;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeSlideUp 0.8s forwards 0.5s;
+  padding: 1rem 0;
 }
 
-@keyframes fadeSlideDown {
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeSlideUp {
-  to { opacity:1; transform: translateY(0); }
-}
-
+/* Responsive */
 @media (max-width:768px) {
   body { font-size:18px; }
-  .question { font-size:1.1rem; }
+  .question { font-size:1.2rem; }
   .answer { font-size:1rem; }
 }
 @media (max-width:480px) {
-  .grid { grid-template-columns:1fr; }
+  .container { padding: 1rem; }
 }
 </style>
 </head>
@@ -177,7 +156,7 @@ footer {
 <div class="container">
   <header>
     <div class="brand">SAHILCODELAB</div>
-    <h1>External Preparation</h1>
+    <h1>Exam Q&A</h1>
     <div class="name">Powered by AI • SRGPT</div>
     <button id="copyAll">Copy All Answers</button>
   </header>
@@ -226,9 +205,6 @@ function render(list){
       <div class="answer">${item.Answer}</div>
     </div>
   `).join("");
-  document.querySelectorAll('.card').forEach((c,i)=>{
-    setTimeout(()=>c.classList.add('show'),i*80);
-  });
   countEl.textContent=`${list.length} of ${state.all.length}`;
 }
 
